@@ -54,5 +54,9 @@ public class ProfileService {
 		 repository.deleteById(userId);
 		
 	}
+	
+
+
+            
     
 }

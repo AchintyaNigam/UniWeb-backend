@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,12 +24,14 @@ public class AdminProfileController {
     private AdminProfileService service;
     
     @GetMapping("/get")
+    @PreAuthorize("hasAuthority('admin')")
     public List<AdminProfile> getAllAdminProfiles()
     {
     	return service.getAllAdminProfiles();
     }
     
     @GetMapping("/get/{userId}")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<AdminProfile> getStudentAddress(@PathVariable("userId") int userId)
     {
     	AdminProfile adminProfile = service.getAdminProfile(userId);
@@ -41,12 +44,14 @@ public class AdminProfileController {
     }
     
     @PostMapping("/post")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<AdminProfile> createAdminProfile(@RequestBody AdminProfile adminProfile) {
         AdminProfile createdAdminProfile = service.createAdminProfile(adminProfile);
         return new ResponseEntity<>(createdAdminProfile, HttpStatus.CREATED);
     }
     
     @PutMapping("update/{userId}")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<AdminProfile> updateAdminProfile(@PathVariable int userId, @RequestBody AdminProfile teacherProfile) {
         AdminProfile updatedAdminProfile = service.updateAdminProfile(userId, teacherProfile);
         return new ResponseEntity<>(updatedAdminProfile, HttpStatus.OK);

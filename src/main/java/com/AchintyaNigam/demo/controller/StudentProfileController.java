@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,12 +25,14 @@ public class StudentProfileController {
     private StudentProfileService service;
     
     @GetMapping("/get")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher')")
     public List<StudentProfile> getAllStudentProfiles()
     {
     	return service.getAllStudentProfiles();
     }
     
     @GetMapping("/get/{userId}")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher') or hasAuthority('student')")
     public ResponseEntity<StudentProfile> getStudentProfile(@PathVariable("userId") int userId)
     {
     	StudentProfile profile = service.getStudentProfile(userId);
@@ -42,18 +45,21 @@ public class StudentProfileController {
     }
     
     @PostMapping("/post")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('student')")
     public ResponseEntity<StudentProfile> createStudentProfile(@RequestBody StudentProfile studentProfile) {
         StudentProfile createdStudentProfile = service.createStudentProfile(studentProfile);
         return new ResponseEntity<>(createdStudentProfile, HttpStatus.CREATED);
     }
     
     @PutMapping("/update/{userId}")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('student')")
     public ResponseEntity<StudentProfile> updateStudentProfile(@PathVariable int userId, @RequestBody StudentProfile studentProfile) {
         StudentProfile updatedStudentProfile = service.updateStudentProfile(userId, studentProfile);
         return new ResponseEntity<>(updatedStudentProfile, HttpStatus.OK);
     }
     
     @DeleteMapping("delete/{userId}")
+    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<Void> deleteStudentProfile(@PathVariable int userId) {
         service.deleteStudentProfile(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

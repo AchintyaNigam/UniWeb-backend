@@ -73,6 +73,7 @@ public class Profile {
 	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
+
 	
 
     // Constructors, getters, and setters
