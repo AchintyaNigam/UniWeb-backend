@@ -27,7 +27,6 @@ public class UserInfoUserDetails implements UserDetails{
 	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		System.out.print(authorities);
 		return authorities;
 	}
 
