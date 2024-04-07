@@ -45,7 +45,6 @@ public class StudentProfileController {
     }
     
     @PostMapping("/post")
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('student')")
     public ResponseEntity<StudentProfile> createStudentProfile(@RequestBody StudentProfile studentProfile) {
         StudentProfile createdStudentProfile = service.createStudentProfile(studentProfile);
         return new ResponseEntity<>(createdStudentProfile, HttpStatus.CREATED);

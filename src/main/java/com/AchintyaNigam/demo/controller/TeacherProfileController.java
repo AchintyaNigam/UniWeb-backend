@@ -45,7 +45,6 @@ public class TeacherProfileController {
     }
     
     @PostMapping("/post")
-    @PreAuthorize("hasAuthority('admin')")
     public ResponseEntity<TeacherProfile> createTeacherProfile(@RequestBody TeacherProfile teacherProfile) {
         TeacherProfile createdTeacherProfile = service.createTeacherProfile(teacherProfile);
         return new ResponseEntity<>(createdTeacherProfile, HttpStatus.CREATED);
