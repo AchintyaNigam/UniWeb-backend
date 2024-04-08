@@ -32,7 +32,7 @@ public class MainProfileController {
     }
     
     @GetMapping("/get/{userId}")
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('student') or hasAuthority('teacher')")
     public ResponseEntity<Profile> getProfile(@PathVariable("userId") int userId)
     {
     	Profile profile = service.getProfile(userId);
@@ -51,7 +51,7 @@ public class MainProfileController {
     }
     
     @PutMapping("update/{userId}")
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('student') or hasAuthority('teacher')")
     public ResponseEntity<Profile> updateProfile(@PathVariable int userId, @RequestBody Profile profile) {
         Profile updatedProfile = service.updateProfile(userId, profile);
         return new ResponseEntity<>(updatedProfile, HttpStatus.OK);
