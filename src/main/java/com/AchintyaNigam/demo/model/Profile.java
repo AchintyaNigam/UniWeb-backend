@@ -1,7 +1,6 @@
 package com.AchintyaNigam.demo.model;
 
 
-import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,7 +26,7 @@ public class Profile {
     private String password;
     private String fullName;
     private String email;
-    private Date birthdate;
+    private String birthdate;
     
     @JsonIgnore
 	public int getUserId() {
@@ -67,10 +66,10 @@ public class Profile {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getBirthdate() {
+	public String getBirthdate() {
 		return birthdate;
 	}
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
 
