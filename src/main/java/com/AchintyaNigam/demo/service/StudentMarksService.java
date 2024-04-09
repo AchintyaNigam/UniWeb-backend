@@ -17,7 +17,7 @@ public class StudentMarksService {
 		return repository.findAll();
 	}
 
-	public StudentMarks getStudentMarks(int userId) {
+	public List<StudentMarks> getStudentMarks(int userId) {
 		return repository.findByUserId(userId);
 	}
 

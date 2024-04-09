@@ -33,16 +33,16 @@ public class StudentMarksController {
     
     @GetMapping("/get/{userId}")
     @PreAuthorize("hasAuthority('admin') or hasAuthority('student') or hasAuthority('teacher')")
-    public ResponseEntity<StudentMarks> getStudentMarks(@PathVariable("userId") int userId)
+    public ResponseEntity<List<StudentMarks>> getStudentMarks(@PathVariable("userId") int userId)
     {
 
-        StudentMarks marks = service.getStudentMarks(userId);
+    	List<StudentMarks> marksList = service.getStudentMarks(userId);
 
        
-        if (marks != null) {
-            return ResponseEntity.ok(marks); // Return 200 OK with the user profile
+        if (!marksList.isEmpty()) {
+            return ResponseEntity.ok(marksList); // Return 200 OK with the list of marks
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 Not Found if user not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 Not Found if no marks found
         }
     }
     
