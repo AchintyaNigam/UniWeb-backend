@@ -25,7 +25,7 @@ public class MainProfileController {
     private ProfileService service;
     
     @GetMapping("/get")
-    @PreAuthorize("hasAuthority('admin')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher')")
     public List<Profile> getAllProfiles()
     {
     	return service.getAllProfiles();

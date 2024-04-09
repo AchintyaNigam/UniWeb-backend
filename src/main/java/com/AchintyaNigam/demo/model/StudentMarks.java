@@ -15,8 +15,15 @@ public class StudentMarks {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
+    private int rollNumber;
 
-    @Column(name = "user_id")
+    public int getRollNumber() {
+		return rollNumber;
+	}
+	public void setRollNumber(int rollNumber) {
+		this.rollNumber = rollNumber;
+	}
+	@Column(name = "user_id")
     private int userId;
 
     private String subject;

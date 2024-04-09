@@ -55,9 +55,10 @@ public class StudentMarksController {
     
     @PutMapping("update/{id}")
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher')")
-    public ResponseEntity<StudentMarks> updateStudentMarks(@PathVariable int id, @RequestBody StudentMarks studentMarks) {
-        StudentMarks updatedStudentMarks = service.updateStudentMarks(id, studentMarks);
-        return new ResponseEntity<>(updatedStudentMarks, HttpStatus.OK);
+
+    	public ResponseEntity<Void> updateStudentMarks(@RequestBody List<StudentMarks> studentMarks) {
+    	    service.updateStudentMarksBatch(studentMarks); // Implement service method for batch update
+    	    return new ResponseEntity<>(HttpStatus.OK);
     }
     
     @DeleteMapping("delete/{id}")

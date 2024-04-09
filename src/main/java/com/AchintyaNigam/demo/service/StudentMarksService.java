@@ -42,5 +42,10 @@ public class StudentMarksService {
 	public void deleteStudentMarks(int id) {
 		repository.deleteById(id);
 	}
+
+	public void updateStudentMarksBatch(List<StudentMarks> studentMarks) {
+		repository.saveAll(studentMarks);
+	}
+		
     
 }
