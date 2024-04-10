@@ -32,7 +32,7 @@ public class StudentAddressController {
     }
     
     @GetMapping("/get/{userId}")
-    @PreAuthorize("hasAuthority('admin') or hasAuthority('student')")
+    @PreAuthorize("hasAuthority('admin') or hasAuthority('student') or hasAuthority('teacher')")
     public ResponseEntity<StudentAddress> getStudentAddress(@PathVariable("userId") int userId)
     {
     	StudentAddress address = service.getStudentAddress(userId);
