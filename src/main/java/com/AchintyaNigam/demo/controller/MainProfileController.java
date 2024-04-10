@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.AchintyaNigam.demo.model.CreateProfileResponse;
 import com.AchintyaNigam.demo.model.Profile;
 import com.AchintyaNigam.demo.service.ProfileService;
 
@@ -45,10 +46,13 @@ public class MainProfileController {
     }
     
     @PostMapping("/post")
-    public ResponseEntity<Profile> createProfile(@RequestBody Profile profile) {
+    public ResponseEntity<CreateProfileResponse> createProfile(@RequestBody Profile profile) {
         Profile createdProfile = service.createProfile(profile);
-        return new ResponseEntity<>(createdProfile, HttpStatus.CREATED);
+        CreateProfileResponse response = new CreateProfileResponse();
+        response.setUserId(createdProfile.getUserId()); 
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
     
     @PutMapping("update/{userId}")
     @PreAuthorize("hasAuthority('admin') or hasAuthority('student') or hasAuthority('teacher')")

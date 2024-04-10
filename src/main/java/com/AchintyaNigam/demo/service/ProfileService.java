@@ -1,5 +1,8 @@
 package com.AchintyaNigam.demo.service;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +18,9 @@ public class ProfileService {
     @Autowired
     private ProfileRepository repository;
 
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
 	public List<Profile> getAllProfiles() {
 		// TODO Auto-generated method stub
 		return repository.findAll();
@@ -27,8 +33,11 @@ public class ProfileService {
 
 	public Profile createProfile(Profile profile) {
 		// TODO Auto-generated method stub
+        String encodedPassword = bCryptPasswordEncoder.encode(profile.getPassword());
+        profile.setPassword(encodedPassword);
 		return repository.save(profile);
 	}
+	
 
 	public Profile updateProfile(int userId, Profile profile) {
 		// TODO Auto-generated method stub
