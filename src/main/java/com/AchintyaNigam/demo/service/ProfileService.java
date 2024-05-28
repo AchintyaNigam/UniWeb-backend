@@ -8,6 +8,9 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.AchintyaNigam.demo.model.Profile;
@@ -26,8 +29,10 @@ public class ProfileService {
 		return repository.findAll();
 	}
 
+	@Cacheable(cacheNames = "users", key="#userId")
 	public Profile getProfile(int userId) {
 		// TODO Auto-generated method stub
+		System.out.println("DB accessed for user:"+userId);
 		return repository.findByUserId(userId);
 	}
 
@@ -38,7 +43,7 @@ public class ProfileService {
 		return repository.save(profile);
 	}
 	
-
+	@CachePut(cacheNames = "users", key="#userId")
 	public Profile updateProfile(int userId, Profile profile) {
 		// TODO Auto-generated method stub
 		Optional<Profile> existingStudentProfileOptional = repository.findById(userId);
@@ -58,6 +63,7 @@ public class ProfileService {
 		return null;
 	}
 
+	@CacheEvict(cacheNames = "users", key="#userId")
 	public void deleteProfile(int userId) {
 		// TODO Auto-generated method stub
 		 repository.deleteById(userId);

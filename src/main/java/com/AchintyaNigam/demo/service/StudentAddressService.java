@@ -3,6 +3,9 @@ package com.AchintyaNigam.demo.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.AchintyaNigam.demo.model.StudentAddress;
@@ -18,6 +21,7 @@ public class StudentAddressService {
 		return repository.findAll();
 	}
 
+	@Cacheable(cacheNames="studentAddress", key = "#userId")
 	public StudentAddress getStudentAddress(int userId) {
 		// TODO Auto-generated method stub
 		return repository.findByUserId(userId);
@@ -28,6 +32,7 @@ public class StudentAddressService {
 		return repository.save(studentAddress);
 	}
 
+	@CachePut(cacheNames="studentAddress", key = "#userId")
 	public StudentAddress updateStudentAddress(int userId, StudentAddress studentAddress) {
 		// TODO Auto-generated method stub
 		StudentAddress existingStudentProfile = repository.findById(userId).orElse(null);
@@ -43,6 +48,7 @@ public class StudentAddressService {
 		return null;
 	}
 
+	@CacheEvict(cacheNames="studentAddress", key = "#userId")
 	public void deleteStudentAddress(int userId) {
 		repository.deleteById(userId);
 	}
