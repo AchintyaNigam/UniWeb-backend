@@ -25,19 +25,16 @@ public class ProfileService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     
 	public List<Profile> getAllProfiles() {
-		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
 
 	@Cacheable(cacheNames = "users", key="#userId")
 	public Profile getProfile(int userId) {
-		// TODO Auto-generated method stub
 		System.out.println("DB accessed for user:"+userId);
 		return repository.findByUserId(userId);
 	}
 
 	public Profile createProfile(Profile profile) {
-		// TODO Auto-generated method stub
         String encodedPassword = bCryptPasswordEncoder.encode(profile.getPassword());
         profile.setPassword(encodedPassword);
 		return repository.save(profile);
