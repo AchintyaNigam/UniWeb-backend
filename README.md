@@ -23,7 +23,7 @@ The Following describes the steps required to set up this spring boot server on 
   - Step 8: Replace the password in the appliaction.properties file with the password.
   - Step 9: to generate the .JAR file use: `mvn clean install -Djasypt.encryptor.password=<your_secret_key>`. Make sure to replace <your_secret_key> with the key you used to generate your encrypted password in the previous step.
   - Step 10: to Run the server: `mvn spring-boot:run -Dspring-boot.run.jvmArguments="-Djasypt.encryptor.password=<your_secret_key"`. Make sure to replace <your_secret_key> with the key you used to generate your encrypted password in the 7th step.
-  If you are using and IDE you change the VM arguments or VM option in the run configurations to include: `-Djasypt.encryptor.password=<your_secret_key` and then run the application as spring boot application from the IDE.
+  If you are using an IDE change the VM arguments or VM option in the run configurations to include: `-Djasypt.encryptor.password=<your_secret_key` and then run the application as spring boot application from the IDE.
 
 ---
   
