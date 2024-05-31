@@ -10,8 +10,9 @@ The Following describes the steps required to set up this spring boot server on 
   - Step 3: Run `git init` after opening your terminal.
   - Step 4: Clone this repository using: `git clone https://github.com/AchintyaNigam/UniWeb-backend.git`. This will download all the necessary files for running the Spring Boot Application.
   - Step 5: Open the file 'application.properties' located in '/UniWeb-backend/src/main/resources/' in your created directory.
-  - Step 6: This file contains: `spring.datasource.username=root` and
-                               `spring.datasource.password=ENC(vUVms8n1izrt9q3XeBJiyt2zkYPPHUz1DlGJui5OJpWIQhLMFf64lrexrhx55ICU)`
+  - Step 6: This file contains:
+                                    `spring.datasource.username=root` and
+                                    `spring.datasource.password=ENC(vUVms8n1izrt9q3XeBJiyt2zkYPPHUz1DlGJui5OJpWIQhLMFf64lrexrhx55ICU)`
                                Replace these with your database username and password. But the password needs to be encrypted. The code given above contains an encrypted password. See the next step on how to encrypt passwords using jasypt.  
   - Step 7: Encrypt datasource password. The application uses jasypt for encrypting and decrypting the database access password. to encrypt run the following in your terminal: 
   
