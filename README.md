@@ -1,8 +1,8 @@
-#UniWeb-backend
+# UniWeb-backend
 ---
 This is the backend for UniWeb a university management website
 ---
-##Installation and Run Guide
+## Installation and Run Guide
 
 The Following describes the steps required to set up this spring boot server on your machine:
   - Step 1: Set up MySQL server. After setting up the MySQL server for your database, you will need the database URL, your database username and your password.
