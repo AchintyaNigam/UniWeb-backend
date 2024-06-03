@@ -4,7 +4,7 @@ set SERVICE_NAME=UniWebBackendVer4
 
 REM Define paths
 set JAVA_PATH=C:\Program Files\Java\jdk-20\bin\java.exe
-set JAR_PATH=C:\Users\AchintyaNigam\Downloads\UniWeb\UniWeb-backend\target\UniWeb_backend.jar
+set JAR_PATH=C:\Users\AchintyaNigam\Downloads\UniWeb\UniWeb-backend\target\UniWeb-0.0.1-SNAPSHOT.jar
 set WORKING_DIR=C:\Users\AchintyaNigam\Downloads\UniWeb\UniWeb-backend\target
 set JASYPT_PASSWORD=UNIWEB
 
