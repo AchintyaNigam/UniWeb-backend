@@ -18,7 +18,6 @@ public class AdminProfileService {
 		return repository.findAll();
 	}
 
-	@Cacheable(cacheNames = "adminProfiles", key = "#userId")
 	public AdminProfile getAdminProfile(int userId) {
 		return repository.findByUserId(userId);
 	}
@@ -27,7 +26,6 @@ public class AdminProfileService {
 		return repository.save(adminProfile);
 	}
 
-	@CachePut(cacheNames = "adminProfiles", key = "#userId")
 	public AdminProfile updateAdminProfile(int userId, AdminProfile adminProfile) {
 		AdminProfile existingAdminProfile = repository.findByUserId(userId);
 		if(existingAdminProfile != null)

@@ -53,20 +53,27 @@ public class JWTService {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
-	public String generateToken(String userName)
-	{
+	public String generateToken(String username, int userId) {
 		Map<String, Object> claims = new HashMap<>();
-		return createToken(claims, userName);
+		claims.put("userId", userId);  // Add userId to the claims
+		return createToken(claims, username);
 	}
-	
-	public String createToken(Map<String, Object> claims, String userName)
-	{
-		return Jwts.builder().setClaims(claims).setSubject(userName)
+
+	public String createToken(Map<String, Object> claims, String username) {
+		return Jwts.builder()
+				.setClaims(claims)
+				.setSubject(username)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis()+1000*60*30))
-				.signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+				.signWith(getSignKey(), SignatureAlgorithm.HS256)
+				.compact();
 	}
-	
+
+	public Integer extractUserId(String token) {
+		return extractClaim(token, claims -> (Integer) claims.get("userId"));
+	}
+
+
 	private Key getSignKey()
 	{
 		byte[] keyBytes = Decoders.BASE64.decode("64d19c8f1fb9c17a5f2ba1cc72294098cb8f3c446a4f8f6cab2d26604921d9cd");

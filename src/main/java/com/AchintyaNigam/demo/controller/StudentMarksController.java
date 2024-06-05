@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
 
 import com.AchintyaNigam.demo.model.StudentMarks;
 import com.AchintyaNigam.demo.service.StudentMarksService;
@@ -33,16 +34,27 @@ public class StudentMarksController {
     
     @GetMapping("/get/{userId}")
     @PreAuthorize("hasAuthority('admin') or hasAuthority('student') or hasAuthority('teacher')")
-    public ResponseEntity<List<StudentMarks>> getStudentMarks(@PathVariable("userId") int userId)
+    public ResponseEntity<List<StudentMarks>> getStudentMarks(@PathVariable("userId") int userId, Authentication authentication)
     {
+        Integer currentUserId = (Integer) authentication.getDetails(); // Retrieve userId from authentication details
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("admin"));
+        boolean isTeacher = authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("teacher"));
 
-    	List<StudentMarks> marksList = service.getStudentMarks(userId);
+        if(isAdmin || isTeacher || userId==currentUserId)
+        {
+            List<StudentMarks> marksList = service.getStudentMarks(userId);
 
-       
-        if (!marksList.isEmpty()) {
-            return ResponseEntity.ok(marksList); // Return 200 OK with the list of marks
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 Not Found if no marks found
+
+            if (!marksList.isEmpty()) {
+                return ResponseEntity.ok(marksList); // Return 200 OK with the list of marks
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 Not Found if no marks found
+            }
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // Return 403 Forbidden if not authorized
         }
     }
     

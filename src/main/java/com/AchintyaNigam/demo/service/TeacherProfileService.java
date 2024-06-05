@@ -17,24 +17,18 @@ public class TeacherProfileService {
     private TeacherProfileRepository repository;
 
 	public List<TeacherProfile> getAllTeacherProfiles() {
-		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
 
-	@Cacheable(cacheNames = "teacherProfile", key = "#userId")
 	public TeacherProfile getTeacherProfile(int userId) {
-		// TODO Auto-generated method stub
 		return repository.findByUserId(userId);
 	}
 
 	public TeacherProfile createTeacherProfile(TeacherProfile teacherProfile) {
-		// TODO Auto-generated method stub
 		return repository.save(teacherProfile);
 	}
 
-	@CachePut(cacheNames = "teacherProfile", key = "#userId")
 	public TeacherProfile updateTeacherProfile(int userId, TeacherProfile teacherProfile) {
-		// TODO Auto-generated method stub
 		TeacherProfile existingTeacherProfile = repository.findById(userId).orElse(null);
         if (existingTeacherProfile != null) {
             // Update the existing student profile with the new data
@@ -46,7 +40,6 @@ public class TeacherProfileService {
 		return null;
 	}
 
-	@CacheEvict(cacheNames = "teacherProfile", key = "#userId")
 	public void deleteTeacherProfile(int userId) {
 		repository.deleteById(userId);
 	}

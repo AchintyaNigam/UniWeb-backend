@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
 
 import com.AchintyaNigam.demo.model.TeacherProfile;
 import com.AchintyaNigam.demo.service.TeacherProfileService;
@@ -30,20 +31,31 @@ public class TeacherProfileController {
     {
     	return service.getAllTeacherProfiles();
     }
-    
+
     @GetMapping("/get/{userId}")
     @PreAuthorize("hasAuthority('admin') or hasAuthority('teacher')")
-    public ResponseEntity<TeacherProfile> getTeacherProfile(@PathVariable("userId") int userId)
-    {
-    	TeacherProfile profile = service.getTeacherProfile(userId);
-        
-        if (profile != null) {
-            return ResponseEntity.ok(profile); // Return 200 OK with the user profile
+    public ResponseEntity<TeacherProfile> getTeacherProfile(@PathVariable("userId") int userId, Authentication authentication) {
+        // Extract user details from the authentication object
+        Integer currentUserId = (Integer) authentication.getDetails(); // Retrieve userId from authentication details
+
+        // Check if the current user is an admin
+        boolean isAdmin = authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("admin"));
+
+        if (isAdmin || userId == currentUserId) {
+            TeacherProfile profile = service.getTeacherProfile(userId);
+
+            if (profile != null) {
+                return ResponseEntity.ok(profile); // Return 200 OK with the user profile
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 Not Found if user not found
+            }
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // Return 404 Not Found if user not found
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build(); // Return 403 Forbidden if not authorized
         }
     }
-    
+
+
     @PostMapping("/post")
     public ResponseEntity<TeacherProfile> createTeacherProfile(@RequestBody TeacherProfile teacherProfile) {
         TeacherProfile createdTeacherProfile = service.createTeacherProfile(teacherProfile);

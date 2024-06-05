@@ -28,7 +28,6 @@ public class ProfileService {
 		return repository.findAll();
 	}
 
-	@Cacheable(cacheNames = "users", key="#userId")
 	public Profile getProfile(int userId) {
 		System.out.println("DB accessed for user:"+userId);
 		return repository.findByUserId(userId);
@@ -39,8 +38,7 @@ public class ProfileService {
         profile.setPassword(encodedPassword);
 		return repository.save(profile);
 	}
-	
-	@CachePut(cacheNames = "users", key="#userId")
+
 	public Profile updateProfile(int userId, Profile profile) {
 		// TODO Auto-generated method stub
 		Optional<Profile> existingStudentProfileOptional = repository.findById(userId);
@@ -60,7 +58,6 @@ public class ProfileService {
 		return null;
 	}
 
-	@CacheEvict(cacheNames = "users", key="#userId")
 	public void deleteProfile(int userId) {
 		// TODO Auto-generated method stub
 		 repository.deleteById(userId);

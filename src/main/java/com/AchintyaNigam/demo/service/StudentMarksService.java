@@ -20,7 +20,6 @@ public class StudentMarksService {
 		return repository.findAll();
 	}
 
-	@Cacheable(cacheNames = "studentMarks", key = "#userId")
 	public List<StudentMarks> getStudentMarks(int userId) {
 		return repository.findByUserId(userId);
 	}
@@ -29,7 +28,6 @@ public class StudentMarksService {
 		return repository.save(studentMarks);
 	}
 
-	@CachePut(cacheNames = "studentMarks", key = "#id")
 	public StudentMarks updateStudentMarks(int id, StudentMarks studentMarks) {
 		StudentMarks existingProfile = repository.findById(id).orElse(null);
         if (existingProfile != null) {
@@ -44,7 +42,6 @@ public class StudentMarksService {
 		return null;
 	}
 
-	@CacheEvict(cacheNames = "studentMarks", key = "#id")
 	public void deleteStudentMarks(int id) {
 		repository.deleteById(id);
 	}

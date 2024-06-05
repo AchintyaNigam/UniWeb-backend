@@ -17,24 +17,19 @@ public class StudentAddressService {
     private StudentAddressRepository repository;
 
 	public List<StudentAddress> getAllStudentAddresses() {
-		// TODO Auto-generated method stub
 		return repository.findAll();
 	}
 
-	@Cacheable(cacheNames="studentAddress", key = "#userId")
 	public StudentAddress getStudentAddress(int userId) {
-		// TODO Auto-generated method stub
 		return repository.findByUserId(userId);
 	}
 
 	public StudentAddress createStudentAddress(StudentAddress studentAddress) {
-		// TODO Auto-generated method stub
 		return repository.save(studentAddress);
 	}
 
-	@CachePut(cacheNames="studentAddress", key = "#userId")
+
 	public StudentAddress updateStudentAddress(int userId, StudentAddress studentAddress) {
-		// TODO Auto-generated method stub
 		StudentAddress existingStudentProfile = repository.findById(userId).orElse(null);
         if (existingStudentProfile != null) {
             // Update the existing student profile with the new data
@@ -48,7 +43,6 @@ public class StudentAddressService {
 		return null;
 	}
 
-	@CacheEvict(cacheNames="studentAddress", key = "#userId")
 	public void deleteStudentAddress(int userId) {
 		repository.deleteById(userId);
 	}

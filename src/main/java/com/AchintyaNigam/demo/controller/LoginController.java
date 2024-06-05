@@ -52,7 +52,7 @@ public class LoginController {
 	            int userId = profile.getUserId();
 
 	            // Generate JWT token including user role and ID in the payload
-	            String token = jwtService.generateToken(authRequest.getUsername());
+	            String token = jwtService.generateToken(authRequest.getUsername(), userId);
 	            
 	            Map<String, Object> response = new HashMap<>();
 	            response.put("token", token);
