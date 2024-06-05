@@ -5,10 +5,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
+
 
 @Entity
 @Table(name = "student_profile")
-public class StudentProfile {
+public class StudentProfile implements Serializable {
     
     @Id
     @Column(name = "user_id")

@@ -5,9 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "teacher_profile")
-public class TeacherProfile {
+public class TeacherProfile implements Serializable {
     
     @Id
     @Column(name = "user_id")

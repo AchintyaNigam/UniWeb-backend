@@ -1,15 +1,16 @@
 package com.AchintyaNigam.demo.service;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,8 @@ public class ProfileService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    
+
+	@Cacheable(value = "UniWebCache", keyGenerator = "customKeyGenerator")
 	public List<Profile> getAllProfiles() {
 		return repository.findAll();
 	}
@@ -40,7 +42,6 @@ public class ProfileService {
 	}
 
 	public Profile updateProfile(int userId, Profile profile) {
-		// TODO Auto-generated method stub
 		Optional<Profile> existingStudentProfileOptional = repository.findById(userId);
 		Profile existingStudentProfile = existingStudentProfileOptional.orElse(null);
         if (existingStudentProfile != null) {
@@ -59,13 +60,7 @@ public class ProfileService {
 	}
 
 	public void deleteProfile(int userId) {
-		// TODO Auto-generated method stub
 		 repository.deleteById(userId);
 		
 	}
-	
-
-
-            
-    
 }

@@ -1,6 +1,7 @@
 package com.AchintyaNigam.demo.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,7 +17,9 @@ public class TeacherProfileService {
     @Autowired
     private TeacherProfileRepository repository;
 
+	@Cacheable(value = "UniWebCache", keyGenerator = "customKeyGenerator")
 	public List<TeacherProfile> getAllTeacherProfiles() {
+		System.out.println("getAllTeacherProfiles DB access");
 		return repository.findAll();
 	}
 

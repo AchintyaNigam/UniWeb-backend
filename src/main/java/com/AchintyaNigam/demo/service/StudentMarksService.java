@@ -1,6 +1,7 @@
 package com.AchintyaNigam.demo.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,6 +17,7 @@ public class StudentMarksService {
     @Autowired
     private StudentMarksRepository repository;
 
+	@Cacheable(value = "UniWebCache", keyGenerator = "customKeyGenerator")
 	public List<StudentMarks> getAllStudentMarks() {
 		return repository.findAll();
 	}

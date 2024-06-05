@@ -11,9 +11,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.io.Serializable;
+
 @Entity
 @Table(name = "profiles")
-public class Profile {
+public class Profile implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
